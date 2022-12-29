@@ -4,7 +4,7 @@
   "version": "0.1",
   "builds": [
     {
-      "chipFamily": "ESP32",
+      "chipFamily": "ESP32-S3",
       "parts": [
         { "path": "firmware/servotest/bootloader.bin", "offset": 0},      
         { "path": "firmware/servotest/partitions.bin", "offset": 32768 },
