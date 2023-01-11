@@ -60,18 +60,16 @@ void displayQrcode()
   uint8_t qrcodeData[qrcode_getBufferSize(20)];
   QRCode qrcode;  
   qrcode_initText(&qrcode, qrcodeData, 6, 0, config_lnurl.c_str());
-  tft.fillScreen(TFT_WHITE);
-  tft.drawRect(8,8,127,127,TFT_SKYBLUE);
-  tft.drawRect(7,7,129,129,TFT_SKYBLUE);
-  tft.drawRect(6,6,131,131,TFT_SKYBLUE);
-  tft.drawRect(5,5,133,133,TFT_SKYBLUE);
+  tft.fillScreen(TFT_BLACK);
+  tft.fillRect(8,8,127,127,TFT_WHITE);
   for (uint8_t y = 0; y < qrcode.size; y++) {
     for (uint8_t x = 0; x < qrcode.size; x++) {
       if ( qrcode_getModule(&qrcode, x, y) ) {
-        tft.fillRect(QRCODE_X_OFFSET + x * QRCODE_PIXEL_SIZE,QRCODE_Y_OFFSET + y * QRCODE_PIXEL_SIZE,QRCODE_PIXEL_SIZE,QRCODE_PIXEL_SIZE,0);
+        tft.fillRect(QRCODE_X_OFFSET + x * QRCODE_PIXEL_SIZE,QRCODE_Y_OFFSET + y * QRCODE_PIXEL_SIZE,QRCODE_PIXEL_SIZE,QRCODE_PIXEL_SIZE,TFT_BLACK);
       }
     }
   }
+  tft.setTextColor(TFT_WHITE);
   tft.drawString("Scan the QR",150,10,2);
   tft.drawString("for a beer",150,40,2);
   
@@ -98,7 +96,6 @@ bool readConfig() {
   // deserialize the document and return in case of an error
   StaticJsonDocument<2000> doc;
   String content = file.readString();
-  Serial.println(content);
   DeserializationError error = deserializeJson(doc, content);
   file.close();
 
@@ -278,7 +275,10 @@ void handleSerial()
 
 void bier()
 {
-  displayMessage("Paid! Press the button.");
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(TFT_WHITE);
+  tft.drawString("Paid! Press the button.",10,10,2);
+  tft.fillRect(10,60,300,30,TFT_WHITE);
   bBierConfirm = true;
 }
 
@@ -329,12 +329,19 @@ void setup() {
   button1.attachClick([]() {
     if ( bBierConfirm == true ) {
       bBierConfirm = false;    
-      displayMessage("Opening tap");
-      servo.write(config_servoopen);
-      displayMessage("Tap open");
-      delay(config_tapduration);
-      displayMessage("Closing tap");  
+      servo.write(config_servoopen);    
+      tft.fillRect(10,10,320,30,TFT_BLACK);
+      tft.drawString("Beer is served",10,10,2);
+      int stepdur = config_tapduration / 100;
+      for(int i = 0;(i<100);i++) {
+        tft.fillRect(10,60, (i+1) * 3,30,TFT_YELLOW);        
+        delay(stepdur);
+      }
       servo.write(config_servoclose);
+
+      tft.fillRect(10,10,320,30,TFT_BLACK);     
+      tft.drawString("Enjoy your beer",10,10,2);
+      delay(5000);
       displayQrcode();
     }
   });
