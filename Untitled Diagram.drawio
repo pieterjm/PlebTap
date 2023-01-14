@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-01-14T14:25:49.933Z" agent="5.0 (X11; Ubuntu)" etag="joKH5nv2XJFvds-Umaa3" version="20.7.4" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-14T14:27:57.372Z" agent="5.0 (X11; Ubuntu)" etag="NAnNeROyj_DY17t8z_ne" version="20.7.4" type="github">
   <diagram name="Page-1" id="16e2658f-23c8-b752-8be9-c03fbebb8bbe">
     <mxGraphModel dx="1195" dy="638" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
       <root>
@@ -50,7 +50,7 @@
           <mxGeometry x="440" y="390" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="s5wF1OVs6Fr1SNb-4xnp-11" value="G" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="440" y="350" width="50" height="30" as="geometry" />
+          <mxGeometry x="441" y="346" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="s5wF1OVs6Fr1SNb-4xnp-12" value="NC" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="440" y="310" width="50" height="30" as="geometry" />
@@ -305,6 +305,9 @@
             <mxPoint x="290" y="440" as="sourcePoint" />
             <mxPoint x="320" y="440" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="s5wF1OVs6Fr1SNb-4xnp-68" value="TDisplay S3" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="390" y="187" width="60" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
