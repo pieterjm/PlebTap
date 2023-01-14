@@ -87,6 +87,7 @@ h6 {
   font-weight: 700;
   color: var(--heading-color);
   margin: 0px;
+  margin-top: 10px;
 }
 
 h1 {
@@ -115,7 +116,6 @@ h6 {
 
 ol {
   margin: 0px;
-  padding: 0px;
   list-style-type: decimal;
 }
 

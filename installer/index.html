@@ -48,7 +48,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="ud-menu-scroll" href="#features">Features</a>
+                                    <a class="ud-menu-scroll" href="#instructions">Instructions</a>
                                 </li>
                             </ul>
                         </div>
@@ -236,13 +236,14 @@
     </section>
     <!-- ====== Hero End ====== -->
 
-    <!-- ====== Features Start ====== -->
-    <section id="features" class="ud-features">
+    <!-- ====== Instructions Start ====== -->
+    <section id="instructions" class="ud-features">
         <div class="container">
                         <h2>Installation and configuring</h2>
+                        <p>To get the PlebTap up and running, you need to perform the following steps: Flash the firmware, Configure LNbits and Configure the PlebTab.</p>
 
-                        <div class="ud-info-meta">
-                            <p>To install a fresh firmware, use the following steps:
+                            <h3>Flash the Firmware</h3>
+                            <p>To install a fresh firmware, use the following steps:</p>
                                 <ol>
                                     <li>Use a compatible browser such as Chrome or Edge.</li>
                                     <li>Unplug the device (the Lilygo T-Display S3).</li>
@@ -251,7 +252,17 @@
                                     <li>Select the firmware and press the 'Flash' button to start the flashing process.</li>
                                     <li>After flashing is completed. Reset or power cycle the device.</li>
                                 </ol>
-                            </p>                            
+                            <h3>Configure LNbits</h3>
+                            <p>LNbits takes care of the payment, and notifying the PlebTap after a succesfull payment is completed. You can use your own instance of LNbits. As an alternative, it is also possible to use the public testing instance of LNbits: <A href="https://legend.lnbits.com/">https://legend.lnbits.com/</A>. To configure LNbits, take the following steps:</p>
+                            <ol>
+                                <li>Log in to your wallet in LNbits and verify that the LNURLdevice extension is enabled. If not, click 'Manage extensions' and enable the 'LNURLDevice' extension.</li>
+                                <li>Open the LNURLDevice extension and create a new device by clicking on the 'NEW LNURLDEVICE INSTANCE'.</li>
+                                <li>Fill in the required information in the pop-up window. Select 'Switch', enter an amount and enter some data for millisecs and GPIO (e.g. 1 and 1).</li>
+                                <li>Click 'CREATE LNURLDEVICE'.</li>
+                                <li>The LNURL string is needed for PlebTap confguration. To copy this string, click the 'eye' icon and in the pop-up window copy the LNURL string.</li>
+                                <li>The LNURL Device String (or WebSocket link) is also needed for PlebTap configuration. To copy this string, click the 'LNURLDevice settings' icon. Copy the string from the pop-up window.</li>
+                            </ol>
+                            <h3>PlebTap Configuation</h3>                            
                             <p>To configure the device, use the following steps:</p>
                             <ol>
                                 <li>Use a compatible browser such as Chrome or Edge.</li>
@@ -260,63 +271,12 @@
                                 <li>Click 'Select Template' and select 'PlebTap Config' to load the configuration template.</li>
                                 <li>Click the 'Connect' button and select the serial port of the device.</li>
                                 <li>(Optional) Load the current configuration by clicking 'Download from Device'.</li>
-                                <li>Modify the configuration.</li>
+                                <li>Modify the configuration and enter the LNURL and WebSocket link from the LNbits configuration.</li>
                                 <li>Click 'Save to Device' to upload the configuration to the device. When upload is completed, the configuration is directly loaded into the device.</li>
                             </ol>
-                        </div>
         </div>
     </section>
-    <!-- ====== Features End ====== -->
-
-    <!-- ====== Contact Start ====== -->
-    <section id="contact" class="ud-contact">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-xl-8 col-lg-7">
-                    <div class="ud-contact-content-wrapper">
-                        <div class="ud-contact-title">
-                            <h2>
-                                Get involved,<br />
-                                connect with us
-                            </h2>
-                        </div>
-                        <div class="ud-contact-info-wrapper">
-                            <div class="ud-single-info">
-                                <div class="ud-info-icon">
-                                    <i class="lni lni-users"></i>
-                                </div>
-                                <div class="ud-info-meta">
-                                    <h5>LNbits Community</h5>
-                                    <p>LNbits has an incredible community of users and developers, exchanging ideas,
-                                        helping each other, and extending the free and open-source software </p>
-                                    <br />
-                                    <p>Join the telegram group <a href="https://t.me/lnbits">t.me/lnbits</a> and
-                                        <a href="https://t.me/makerbits">t.me/makerbits</a>
-                                    </p>
-                                </div>
-
-
-                            </div>
-                            <div class="ud-single-info">
-                                <div class="ud-info-icon">
-                                    <i class="lni lni-envelope"></i>
-                                </div>
-                                <div class="ud-info-meta">
-                                    <h5>lnbits.com</h5>
-                                    <p>This server is maintained by a few LNbits developers as an example demo of the
-                                        software.</p>
-                                    <br />
-                                    <p>Email us directly <a href="mailto:lnbits@pm.me">lnbits@pm.me</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- ====== Contact End ====== -->
+    
 
     <!-- ====== Footer Start ====== -->
     <footer class="ud-footer wow fadeInUp" data-wow-delay=".15s">
@@ -391,11 +351,7 @@
 
     <!-- ====== Footer End ====== -->
 
-    <!-- ====== Back To Top Start ====== -->
-    <a href="javascript:void(0)" class="back-to-top">
-        <i class="lni lni-chevron-up"> </i>
-    </a>
-    <!-- ====== Back To Top End ====== -->
+
 
     <!-- ====== All Javascript Files ====== -->
     <script type="module" src="https://unpkg.com/esp-web-tools@8.0.6/dist/web/install-button.js?module"></script>

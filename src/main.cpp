@@ -9,8 +9,9 @@
 #include <WebSocketsClient.h>
 #include <qrcode.h>
 
-#define PIN_BUTTON_1                 0
-#define PIN_BUTTON_2                 14
+#define BIER_LED        17
+#define BIER_BUTTON     21
+#define SERVO_PIN       16
 #define QRCODE_PIXEL_SIZE 3
 #define QRCODE_X_OFFSET 10
 #define QRCODE_Y_OFFSET 10
@@ -19,8 +20,7 @@
 Servo servo;
 TFT_eSPI tft = TFT_eSPI();
 
-OneButton button1(PIN_BUTTON_1, true);
-OneButton button2(PIN_BUTTON_2, true);
+OneButton button(BIER_BUTTON, true, true);
 fs::SPIFFSFS &FlashFS = SPIFFS;
 WebSocketsClient webSocket;
 bool bOperational = false;
@@ -28,7 +28,6 @@ bool bOperational = false;
 #define FORMAT_ON_FAIL true
 #define PARAM_FILE "/elements.json"
 
-#define SERVO_PIN 16
 
 int servoAngle = 0;
 
@@ -276,6 +275,7 @@ void handleSerial()
 
 void bier()
 {
+  digitalWrite(BIER_LED, HIGH);
   tft.fillScreen(TFT_BLACK);
   tft.setTextColor(TFT_WHITE);
   tft.drawString("Paid! Press the button.",10,10,2);
@@ -313,6 +313,7 @@ void setup() {
   Serial.begin(115200);
   delay(2000);
 
+
   // initialise TFT
   tft.begin();
   tft.setRotation(3);
@@ -324,10 +325,10 @@ void setup() {
     Serial.println("An Error has occurred while mounting SPIFFS");
   }
 
- 
-  servo.attach(SERVO_PIN);
- 
-  button1.attachClick([]() {
+  pinMode(BIER_LED, OUTPUT); 
+  servo.attach(SERVO_PIN); 
+  button.attachClick([]() {
+    digitalWrite(BIER_LED, LOW);
     if ( bBierConfirm == true ) {
       bBierConfirm = false;    
       servo.write(config_servoopen);    
@@ -356,8 +357,7 @@ void setup() {
 
 void loop() {
   if ( bOperational ) {
-    button1.tick();
-    button2.tick();
+    button.tick();
     webSocket.loop();
   }
 
