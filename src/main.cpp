@@ -4,7 +4,6 @@
 #include <Arduino.h>
 #include "TFT_eSPI.h"
 #include <ESP32Servo.h>
-#include <OneButton.h>
 #include <ArduinoJson.h>
 #include <WebSocketsClient.h>
 #include <qrcode.h>
@@ -20,7 +19,6 @@
 Servo servo;
 TFT_eSPI tft = TFT_eSPI();
 
-OneButton button(BIER_BUTTON, true, true);
 fs::SPIFFSFS &FlashFS = SPIFFS;
 WebSocketsClient webSocket;
 bool bOperational = false;
@@ -51,7 +49,6 @@ int config_tapduration;
 
 
 bool removeBeforeAppend = false;
-bool bBierConfirm = false;
 
 // display qr code on the screen
 void displayQrcode()
@@ -280,7 +277,28 @@ void bier()
   tft.setTextColor(TFT_WHITE);
   tft.drawString("Paid! Press the button.",10,10,2);
   tft.fillRect(10,60,300,30,TFT_WHITE);
-  bBierConfirm = true;
+
+  int currentState = digitalRead(BIER_BUTTON);
+  while ( currentState != LOW ) {
+    delay(100);
+    currentState = digitalRead(BIER_BUTTON);
+  }
+
+  digitalWrite(BIER_LED, LOW);
+ 
+  servo.write(config_servoopen);    
+  tft.fillRect(10,10,320,30,TFT_BLACK);
+  tft.drawString("Beer is served",10,10,2);
+  int stepdur = config_tapduration / 100;
+  for(int i = 0;(i<100);i++) {
+    tft.fillRect(10,60, (i+1) * 3,30,TFT_GOLD);        
+    delay(stepdur);
+  }
+  servo.write(config_servoclose);
+  tft.fillRect(10,10,320,30,TFT_BLACK);     
+  tft.drawString("Enjoy your beer",10,10,2);
+  delay(5000);
+  displayQrcode();
 }
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
@@ -308,6 +326,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
   }
 }
 
+
 void setup() {
   // Initialise serial port for debugging output
   Serial.begin(115200);
@@ -325,39 +344,21 @@ void setup() {
     Serial.println("An Error has occurred while mounting SPIFFS");
   }
 
+  pinMode(BIER_BUTTON, INPUT_PULLUP);
   pinMode(BIER_LED, OUTPUT); 
   servo.attach(SERVO_PIN); 
-  button.attachClick([]() {
-    digitalWrite(BIER_LED, LOW);
-    if ( bBierConfirm == true ) {
-      bBierConfirm = false;    
-      servo.write(config_servoopen);    
-      tft.fillRect(10,10,320,30,TFT_BLACK);
-      tft.drawString("Beer is served",10,10,2);
-      int stepdur = config_tapduration / 100;
-      for(int i = 0;(i<100);i++) {
-        tft.fillRect(10,60, (i+1) * 3,30,TFT_YELLOW);        
-        delay(stepdur);
-      }
-      servo.write(config_servoclose);
-
-      tft.fillRect(10,10,320,30,TFT_BLACK);     
-      tft.drawString("Enjoy your beer",10,10,2);
-      delay(5000);
-      displayQrcode();
-    }
-  });
+    
 
   webSocket.onEvent(webSocketEvent);
 
 
   readConfig();     
+ 
 }
 
 
 void loop() {
   if ( bOperational ) {
-    button.tick();
     webSocket.loop();
   }
 
