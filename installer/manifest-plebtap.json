@@ -1,0 +1,16 @@
+{
+  "name": "PlebTap",
+  "new_install_prompt_erase": true,
+  "version": "0.2",
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        { "path": "firmware/plebtap/bootloader.bin", "offset": 0},      
+        { "path": "firmware/plebtap/partitions.bin", "offset": 32768 },
+        { "path": "firmware/plebtap/boot_app0.bin", "offset": 57344},  
+        { "path": "firmware/plebtap/firmware.bin", "offset": 65536 }    
+      ]
+    }
+  ]
+}
