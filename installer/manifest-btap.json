@@ -1,7 +1,7 @@
 {
   "name": "BTap",
   "new_install_prompt_erase": true,
-  "version": "0.3",
+  "version": "0.4",
   "builds": [
     {
       "chipFamily": "ESP32",
